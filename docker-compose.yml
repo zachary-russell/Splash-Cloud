@@ -1,11 +1,25 @@
-haproxy:
+proxy:
     image: tutum/haproxy 
     ports:
         # Splash
         - "80:80"
         - "1936:1936"
     links:
-        - web
+        #- web
+        - splash
+    environment:
+        - BALANCE=leastconn
+        - BACKEND_PORT-8050
 
-web:
-    image: tutum/hello-world
+    #web:
+    #image: tutum/hello-world
+
+splash:
+    image: scrapinghub/splash
+    command: --max-timeout 3600 --disable-proxy --slots 10 --maxrss 3600 --verbosity 1
+    expose:
+        - 8050
+    mem_limit: 1000m
+    memswap_limit: 1500m
+    restart: always
+
