@@ -1,0 +1,11 @@
+haproxy:
+    image: tutum/haproxy 
+    ports:
+        # Splash
+        - "80:80"
+        - "1936:1936"
+    links:
+        - web
+
+web:
+    image: tutum/hello-world
